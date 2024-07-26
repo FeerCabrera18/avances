@@ -20,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.SystemColor;
 
 public class vLogin extends JFrame {
 
@@ -218,8 +220,40 @@ public class vLogin extends JFrame {
         });
         btnRegistro.setForeground(Color.WHITE);
         btnRegistro.setFont(new Font("Roboto Light", Font.PLAIN, 16));
+        btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistro.setBackground(Color.DARK_GRAY);
         btnRegistro.setBounds(220, 449, 160, 30);
         panelContenedor.add(btnRegistro);
+        
+        JLabel lblRecuperar = new JLabel("Olvidaste tu contraseña ");
+        lblRecuperar.setFont(new Font("Roboto Light", Font.PLAIN, 15));
+        lblRecuperar.setBounds(176, 570, 160, 20);
+        panelContenedor.add(lblRecuperar);
+        
+        
+        Button btnRecuperar = new Button("Recuperar");
+        btnRecuperar.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		btnRecuperar.setBackground(new Color(255, 0, 0));
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent e) {
+        		btnRecuperar.setBackground(Color.DARK_GRAY);
+        	}
+        });
+        btnRecuperar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Recuperar recuperar = new Recuperar();
+        		recuperar.setVisible(true);
+        		vLogin.this.setVisible(false);
+        	}
+        });
+        btnRecuperar.setForeground(Color.WHITE);
+        btnRecuperar.setFont(new Font("Roboto Light", Font.PLAIN, 16));
+        btnRecuperar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnRecuperar.setBackground(Color.DARK_GRAY);
+        btnRecuperar.setBounds(334, 569, 107, 20);
+        panelContenedor.add(btnRecuperar);
     }
 }
