@@ -211,6 +211,9 @@ public class vLogin extends JFrame {
         btnRegistro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	Registro registro  = new Registro();
+            	registro.setVisible(true);
+            	vLogin.this.setVisible(false);
             }
         });
         btnRegistro.setForeground(Color.WHITE);
