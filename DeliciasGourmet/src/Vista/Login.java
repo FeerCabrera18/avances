@@ -205,10 +205,10 @@ public class Login extends JFrame {
 						inicio.setVisible(true);
 						Login.this.setVisible(false);
 						limpiarCampos();
-						
+
 					} else {
-						JOptionPane.showMessageDialog(Login.this, "Error al iniciar sesion, verifique sus datos", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(Login.this, "Error al iniciar sesion, verifique sus datos",
+								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 
 				} catch (Exception e2) {
@@ -294,7 +294,7 @@ public class Login extends JFrame {
 		}
 		return false;
 	}
-	
+
 	public void limpiarCampos() {
 		txtEmail.setText("");
 		txtContrasenia.setText("");

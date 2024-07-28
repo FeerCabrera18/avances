@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Conexion {
 	Connection cx = null;
-	
+
 	public Connection conectar() {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -17,7 +17,7 @@ public class Conexion {
 		}
 		return cx;
 	}
-	
+
 	public void desconectar() {
 		try {
 			cx.close();
