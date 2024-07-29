@@ -100,6 +100,33 @@ public class ClienteControlador {
 		}
 	}
 
+	// Funcion para verificar cliente existente
+	public boolean verificarCliente(Cliente cliente) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = cx.conectar().prepareStatement("SELECT COUNT(*) FROM Cliente WHERE email = ?");
+			ps.setString(1, cliente.getEmail());
+			rs = ps.executeQuery();
+			if (rs.next() && rs.getInt(1) > 0) {
+				int count = rs.getInt(1);
+				System.out.println("Número de usuarios con ese email: " + count);
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 	// Funcion para cifrar contraseñas
 	public String convertirSHA256(String contrasenia) {
 		MessageDigest md = null;

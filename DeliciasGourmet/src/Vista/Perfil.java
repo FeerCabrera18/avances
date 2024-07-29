@@ -143,7 +143,11 @@ public class Perfil extends JPanel {
 				if (cliente != null) {
 					cliente.setTelefono(txtTelefono.getText());
 					cliente.setEmail(txtEmail.getText());
-					if (controlador.actualizarCliente(cliente)) {
+					if (controlador.verificarCliente(cliente)) {
+						JOptionPane.showMessageDialog(null, "El email ya está registrado.", "Advertencia",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					} else if (controlador.actualizarCliente(cliente)) {
 						JOptionPane.showMessageDialog(Perfil.this, "Actualización exitosa!", "Éxito",
 								JOptionPane.INFORMATION_MESSAGE);
 						actualizarDatos();

@@ -32,10 +32,11 @@ public class Login extends JFrame {
 	private JPasswordField txtContrasenia;
 	private JTextField txtEmail;
 	ClienteControlador controlador = new ClienteControlador();
-
+	
 	/**
-	 * Launch the application.
+	 * launch the aplication.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

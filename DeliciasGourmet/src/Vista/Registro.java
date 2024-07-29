@@ -242,8 +242,12 @@ public class Registro extends JFrame {
 						cliente.setTelefono(txtTelefono.getText());
 						cliente.setEmail(txtEmail.getText());
 						cliente.setContrasenia(String.valueOf(txtContrasenia.getPassword()));
-						if (controlador.insertarCliente(cliente)) {
-							JOptionPane.showMessageDialog(Registro.this, "Registro correctamente!", "Éxito",
+						if (controlador.verificarCliente(cliente)) {
+							JOptionPane.showMessageDialog(null, "El email ya está registrado.", "Advertencia",
+									JOptionPane.WARNING_MESSAGE);
+							return;
+						} else if (controlador.insertarCliente(cliente)) {
+							JOptionPane.showMessageDialog(Registro.this, "Registro correctamente!", "Exito",
 									JOptionPane.INFORMATION_MESSAGE);
 							Login login = new Login();
 							login.setVisible(true);
@@ -276,11 +280,14 @@ public class Registro extends JFrame {
 
 		if (nombre.isEmpty() || telefono.isEmpty() || mail.isEmpty() || contrasenia.isEmpty()
 				|| repetirContrasenia.isEmpty()) {
-			JOptionPane.showInternalConfirmDialog(this, "Complete todos los campos", "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
 			return true;
 		} else if (!contrasenia.equals(repetirContrasenia)) {
 			JOptionPane.showMessageDialog(this, "Las contraseñas no son iguales", "Error", JOptionPane.ERROR_MESSAGE);
+			return true;
+		} else if (contrasenia.length() < 8) {
+			JOptionPane.showMessageDialog(this, "Las contraseñas debe contener minimo 8 caracteres", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			return true;
 		}
 		return false;
