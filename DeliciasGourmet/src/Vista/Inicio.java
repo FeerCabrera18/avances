@@ -3,7 +3,6 @@ package Vista;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,27 +17,13 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
+import Modelo.Sesion;
+
 public class Inicio extends JFrame {
 
 	int xMouse, yMouse;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inicio frame = new Inicio();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -116,43 +101,43 @@ public class Inicio extends JFrame {
 		panelContenedor.setBounds(240, 30, 784, 570);
 		contentPane.add(panelContenedor);
 		panelContenedor.setLayout(null);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, -29, 784, 599);
 		panelContenedor.add(tabbedPane);
-		
+
 		JPanel panelInicio = new JPanel();
 		tabbedPane.addTab("Inicio", null, panelInicio, null);
 		panelInicio.setLayout(null);
-		
+
 		JLabel lblInicioPanel = new JLabel("INICIO");
 		lblInicioPanel.setFont(new Font("Roboto", Font.BOLD, 25));
 		lblInicioPanel.setBounds(351, 255, 77, 31);
 		panelInicio.add(lblInicioPanel);
-		
+
 		JPanel panelReservas = new JPanel();
 		tabbedPane.addTab("Reservas", null, panelReservas, null);
 		panelReservas.setLayout(null);
-		
+
 		JLabel lblReservasPanel = new JLabel("RESERVAS");
 		lblReservasPanel.setBounds(329, 255, 123, 31);
 		lblReservasPanel.setFont(new Font("Roboto", Font.BOLD, 25));
 		panelReservas.add(lblReservasPanel);
-		
+
 		JPanel panelHistorial = new JPanel();
 		tabbedPane.addTab("Historial", null, panelHistorial, null);
 		panelHistorial.setLayout(null);
-		
+
 		JLabel lblHistorialPanel = new JLabel("HISTORIAL");
 		lblHistorialPanel.setBounds(326, 255, 126, 31);
 		lblHistorialPanel.setFont(new Font("Roboto", Font.BOLD, 25));
 		panelHistorial.add(lblHistorialPanel);
-		
+
 		Perfil perfil = new Perfil();
 		JPanel panelPerfil = new JPanel();
 		tabbedPane.addTab("Perfil", perfil);
 		panelPerfil.setLayout(null);
-		
+
 		JLabel lblPerfillPanel = new JLabel("PERFIL");
 		lblPerfillPanel.setBounds(349, 255, 81, 31);
 		lblPerfillPanel.setFont(new Font("Roboto", Font.BOLD, 25));
@@ -178,7 +163,7 @@ public class Inicio extends JFrame {
 				tabbedPane.setSelectedIndex(0);
 			}
 		});
-		btnInicio.setForeground(Color.BLACK);
+		btnInicio.setForeground(Color.WHITE);
 		btnInicio.setFont(new Font("Roboto Light", Font.BOLD, 17));
 		btnInicio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnInicio.setBackground(new Color(42, 42, 42));
@@ -205,7 +190,7 @@ public class Inicio extends JFrame {
 				tabbedPane.setSelectedIndex(1);
 			}
 		});
-		btnReservas.setForeground(Color.BLACK);
+		btnReservas.setForeground(Color.WHITE);
 		btnReservas.setFont(new Font("Roboto Light", Font.BOLD, 17));
 		btnReservas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReservas.setBackground(new Color(42, 42, 42));
@@ -232,7 +217,7 @@ public class Inicio extends JFrame {
 				tabbedPane.setSelectedIndex(2);
 			}
 		});
-		btnHistorial.setForeground(Color.BLACK);
+		btnHistorial.setForeground(Color.WHITE);
 		btnHistorial.setFont(new Font("Roboto Light", Font.BOLD, 17));
 		btnHistorial.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnHistorial.setBackground(new Color(42, 42, 42));
@@ -257,12 +242,13 @@ public class Inicio extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane.setSelectedIndex(3);
+				mostrarPerfil();
 			}
 		});
 		btnPerfil.setFont(new Font("Roboto Light", Font.BOLD, 17));
 		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnPerfil.setBackground(new Color(42, 42, 42));
-		btnPerfil.setForeground(Color.BLACK);
+		btnPerfil.setForeground(Color.WHITE);
 		btnPerfil.setBounds(0, 180, 240, 30);
 		contentPane.add(btnPerfil);
 
@@ -273,9 +259,7 @@ public class Inicio extends JFrame {
 		JButton btnCerrarSesion = new JButton("Cerrar sesión");
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login login = new Login();
-				login.setVisible(true);
-				Inicio.this.setVisible(false);
+				cerrarSesion();
 			}
 		});
 		btnCerrarSesion.addMouseListener(new MouseAdapter() {
@@ -299,4 +283,21 @@ public class Inicio extends JFrame {
 		contentPane.add(btnCerrarSesion);
 
 	}
+
+	private void mostrarPerfil() {
+		Perfil perfilPanel = new Perfil();
+
+		// Mostrar el perfil en un nuevo JFrame
+		JFrame perfilFrame = new JFrame("Perfil");
+		perfilFrame.add(perfilPanel);
+		perfilFrame.pack();
+	}
+
+	public void cerrarSesion() {
+		Sesion.cerrarSesion();
+		Login login = new Login();
+		login.setVisible(true);
+		Inicio.this.setVisible(false);
+	}
+
 }

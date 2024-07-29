@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import Conexion.Conexion;
 import Modelo.Cliente;
+import Modelo.Sesion;
 
 public class ClienteControlador {
 	Conexion cx;
@@ -40,14 +41,25 @@ public class ClienteControlador {
 		ResultSet rs = null;
 
 		try {
-			ps = cx.conectar().prepareStatement("SELECT contrasenia FROM Cliente WHERE email = ?");
+			ps = cx.conectar()
+					.prepareStatement("SELECT id, nombre, telefono, email, contrasenia FROM Cliente WHERE email = ?");
 			ps.setString(1, email);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
 				String contraseniaCifrada = rs.getString("contrasenia");
 				String contraseniaIngresada = convertirSHA256(contrasenia);
-				return contraseniaCifrada.equals(contraseniaIngresada);
+				if (contraseniaCifrada.equals(contraseniaIngresada)) {
+					Cliente cliente = new Cliente();
+					cliente.setId(rs.getInt("id"));
+					cliente.setNombre(rs.getString("nombre"));
+					cliente.setTelefono(rs.getString("telefono"));
+					cliente.setEmail(rs.getString("email"));
+					cliente.setContrasenia(contraseniaCifrada);
+
+					Sesion.setClienteActual(cliente);
+					return true;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,6 +74,30 @@ public class ClienteControlador {
 			}
 		}
 		return false;
+	}
+
+	// Funcion para actualizar datos de contacto de clientes
+	public boolean actualizarCliente(Cliente cliente) {
+		PreparedStatement ps = null;
+
+		try {
+			ps = cx.conectar().prepareStatement("UPDATE Cliente SET telefono = ?, email = ? WHERE id = ?");
+			ps.setString(1, cliente.getTelefono());
+			ps.setString(2, cliente.getEmail());
+			ps.setInt(3, cliente.getId());
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	// Funcion para cifrar contraseñas

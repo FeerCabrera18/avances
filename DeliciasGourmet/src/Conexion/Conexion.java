@@ -11,7 +11,7 @@ public class Conexion {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			cx = DriverManager.getConnection("jdbc:sqlite:BaseDeDatos.db");
-			System.out.print("Conexion exitosa!");
+			System.out.println("Conexion exitosa!");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
